@@ -52,7 +52,47 @@
     <section class="card">
       <h2 class="section-title">Formulas</h2>
       <div class="formula">輸入採報告單位：Na/K/Cl mEq/L；Lactate/Ca/Mg/Phosphate mg/dL；Albumin g/dL<br>HCO₃ = 0.0301 × PaCO₂ × 10^(pH − 6.1)<br>Lactate(mmol/L)=Lactate(mg/dL)×0.111；Ca(mmol/L)=Ca(mg/dL)×0.25；Mg(mmol/L)=Mg(mg/dL)×0.411；Phosphate(mmol/L)=Phosphate(mg/dL)×0.323<br>SIDa = Na + K + 2×Ca(mmol/L) + 2×Mg(mmol/L) − Cl − Lactate(mmol/L)<br>Albumin charge = Albumin(g/L) × (0.123×pH − 0.631)<br>Phosphate charge = Phosphate(mmol/L) × (0.309×pH − 0.469)<br>SIDe = HCO₃ + Albumin charge + Phosphate charge<br>SIG = SIDa − SIDe</div>
-      <p class="small">參考範圍採實用臨床 rule of thumb：SIDa 約 38–42 mEq/L、SIG 約 0–5 mEq/L。本版輸入欄位設計為直接照常見報告單位輸入，程式內部自動轉換。Ca 若可取得 ionized calcium，理論上較適合 Stewart calculation；本版暫以 Ca mg/dL 轉換估算。</p>
+      <p class="small">
+參考範圍採實用臨床 rule of thumb：SIDa 約 38–42 mEq/L、SIG 約 0–5 mEq/L。<br>
+本版輸入欄位設計為直接照常見報告單位輸入，程式內部自動轉換。<br>
+Ca 若可取得 ionized calcium，理論上較適合 Stewart calculation；本版暫以 Ca mg/dL 轉換估算。
+<br><br>
+
+<b>Physiologic meaning & clinical interpretation</b>
+<br><br>
+
+<b>SIDa (apparent strong ion difference)</b><br>
+Represents the measured difference between strong cations and strong anions.
+Primarily reflects chloride/lactate-related metabolic effects.
+<br>
+Low SIDa usually indicates chloride- or lactate-driven metabolic acidosis.
+<br>
+High SIDa usually indicates hypochloremic or contraction alkalosis.
+<br><br>
+
+<b>SIDe (effective strong ion difference)</b><br>
+Represents the effective charge balance explained by bicarbonate and weak acids
+(albumin and phosphate).
+<br>
+Affected mainly by bicarbonate concentration, albumin, and phosphate.
+<br><br>
+
+<b>SIG (strong ion gap)</b><br>
+Represents unmeasured ions not explained by routine electrolytes.
+<br>
+Elevated SIG suggests excess unmeasured anions such as:
+<ul style="margin-top:6px; margin-bottom:6px;">
+  <li>uremia</li>
+  <li>ketoacidosis</li>
+  <li>toxic alcohols</li>
+  <li>salicylate</li>
+  <li>sepsis-related anions</li>
+</ul>
+
+<b>Albumin effect</b><br>
+Low albumin reduces weak acids and produces an alkalinizing effect,
+which may mask metabolic acidosis.
+</p>
     </section>
   </main>
   <script>
