@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f766e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="SID Calc" />
+  <link rel="manifest" href="manifest.json" />
+  <title>SID Calculator</title>
+  <style>
+    :root{
+      --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#64748b;
+      --primary:#0f766e; --primary-dark:#115e59; --border:#e2e8f0;
+      --danger:#b91c1c; --warn:#b45309; --ok:#047857; --shadow:0 10px 25px rgba(15,23,42,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#ecfeff 0%,var(--bg) 220px);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",Arial,sans-serif;color:var(--text);}
+    .wrap{max-width:680px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));}
+    header{margin-bottom:16px}.title{font-size:28px;font-weight:800;letter-spacing:-.03em;margin:0}.subtitle{color:var(--muted);margin:6px 0 0;font-size:14px;line-height:1.5}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);padding:16px;margin:14px 0}.section-title{font-size:16px;font-weight:750;margin:0 0 12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);margin-bottom:6px}.field input{width:100%;font-size:18px;padding:12px;border:1px solid var(--border);border-radius:14px;background:#fff;color:var(--text);outline:none}.field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(15,118,110,.13)}.unit{font-size:12px;color:#94a3b8}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}button{border:0;border-radius:15px;padding:13px 14px;font-weight:750;font-size:16px;cursor:pointer}.primary{background:var(--primary);color:#fff}.primary:active{background:var(--primary-dark)}.secondary{background:#e2e8f0;color:#0f172a}.results{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{border:1px solid var(--border);background:#f8fafc;border-radius:18px;padding:13px}.metric .name{font-size:13px;color:var(--muted)}.metric .value{font-size:25px;font-weight:850;margin-top:4px}.metric .note{font-size:12px;color:var(--muted);margin-top:2px}.full{grid-column:1/-1}.pill{display:inline-block;border-radius:999px;padding:6px 10px;font-size:13px;font-weight:750;margin:4px 6px 4px 0}.pill.ok{background:#dcfce7;color:var(--ok)}.pill.warn{background:#fef3c7;color:var(--warn)}.pill.danger{background:#fee2e2;color:var(--danger)}.interp{line-height:1.7;font-size:15px}.interp ul{padding-left:20px;margin:8px 0}.small{font-size:12px;color:var(--muted);line-height:1.6}.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#f1f5f9;border-radius:12px;padding:10px;font-size:12px;overflow:auto;line-height:1.5}@media (max-width:420px){.grid,.results{grid-template-columns:1fr}.title{font-size:25px}.actions{grid-template-columns:1fr}.full{grid-column:auto}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1 class="title">SID Calculator</h1>
+      <p class="subtitle">Stewart approach：計算 SIDa、SIDe、SIG，並產生酸鹼臨床解讀。可加入 iPhone 主畫面並離線使用。</p>
+    </header>
+    <section class="card">
+      <h2 class="section-title">Blood gas / electrolytes</h2>
+      <div class="grid">
+        <div class="field"><label>pH <span class="unit"></span></label><input id="ph" inputmode="decimal" value="7.40"></div>
+        <div class="field"><label>PaCO₂ <span class="unit">mmHg</span></label><input id="pco2" inputmode="decimal" value="40"></div>
+        <div class="field"><label>Na <span class="unit">mmol/L</span></label><input id="na" inputmode="decimal" value="140"></div>
+        <div class="field"><label>K <span class="unit">mmol/L</span></label><input id="k" inputmode="decimal" value="4.0"></div>
+        <div class="field"><label>Cl <span class="unit">mmol/L</span></label><input id="cl" inputmode="decimal" value="104"></div>
+        <div class="field"><label>Lactate <span class="unit">mmol/L</span></label><input id="lactate" inputmode="decimal" value="1.0"></div>
+        <div class="field"><label>Ionized Ca <span class="unit">mmol/L</span></label><input id="ca" inputmode="decimal" value="1.20"></div>
+        <div class="field"><label>Mg <span class="unit">mmol/L</span></label><input id="mg" inputmode="decimal" value="0.80"></div>
+        <div class="field"><label>Albumin <span class="unit">g/dL</span></label><input id="alb" inputmode="decimal" value="4.0"></div>
+        <div class="field"><label>Phosphate <span class="unit">mmol/L</span></label><input id="phos" inputmode="decimal" value="1.0"></div>
+      </div>
+      <div class="actions"><button class="primary" onclick="calc()">Calculate</button><button class="secondary" onclick="resetDemo()">Reset</button></div>
+    </section>
+    <section class="card" id="output" style="display:none">
+      <h2 class="section-title">Results</h2>
+      <div class="results" id="metrics"></div>
+      <div class="interp" id="interpretation" style="margin-top:14px"></div>
+    </section>
+    <section class="card">
+      <h2 class="section-title">Formulas</h2>
+      <div class="formula">HCO₃ = 0.0301 × PaCO₂ × 10^(pH − 6.1)<br>SIDa = Na + K + 2×iCa + 2×Mg − Cl − Lactate<br>Albumin charge = Albumin(g/L) × (0.123×pH − 0.631)<br>Phosphate charge = Phosphate × (0.309×pH − 0.469)<br>SIDe = HCO₃ + Albumin charge + Phosphate charge<br>SIG = SIDa − SIDe</div>
+      <p class="small">參考範圍採實用臨床 rule of thumb：SIDa 約 38–42 mEq/L、SIG 約 0–5 mEq/L。不同文獻、檢驗單位與 ionized divalent cation 使用方式可能略有差異。</p>
+    </section>
+  </main>
+  <script>
+    function num(id){ const x=parseFloat(String(document.getElementById(id).value).replace(',','.')); return Number.isFinite(x)?x:0; }
+    function fmt(x){ return Number.isFinite(x)?x.toFixed(1):'—'; }
+    function badge(text,type){ return `<span class="pill ${type}">${text}</span>`; }
+    function calc(){
+      const ph=num('ph'), pco2=num('pco2'), na=num('na'), k=num('k'), cl=num('cl'), lactate=num('lactate'), ca=num('ca'), mg=num('mg'), albGL=num('alb')*10, phos=num('phos');
+      const hco3=0.0301*pco2*Math.pow(10, ph-6.1);
+      const sida=na+k+2*ca+2*mg-cl-lactate;
+      const albCharge=albGL*(0.123*ph-0.631);
+      const phosCharge=phos*(0.309*ph-0.469);
+      const side=hco3+albCharge+phosCharge;
+      const sig=sida-side;
+      document.getElementById('output').style.display='block';
+      document.getElementById('metrics').innerHTML = metric('HCO₃',fmt(hco3),'mmol/L','Calculated')+metric('SIDa',fmt(sida),'mEq/L','Measured strong ions')+metric('SIDe',fmt(side),'mEq/L','Effective SID')+metric('SIG',fmt(sig),'mEq/L','Unmeasured ions','full');
+      let tags=[];
+      if(ph<7.35) tags.push(badge('Acidemia','danger')); else if(ph>7.45) tags.push(badge('Alkalemia','warn')); else tags.push(badge('pH near normal','ok'));
+      if(sida<38) tags.push(badge('Low SIDa','danger')); else if(sida>42) tags.push(badge('High SIDa','warn')); else tags.push(badge('SIDa normal','ok'));
+      if(sig>5) tags.push(badge('High SIG','danger')); else tags.push(badge('SIG not elevated','ok'));
+      let lines=[];
+      if(sida<38) lines.push('SIDa decreased：支持 strong ion acidosis，常見來自 hyperchloremia、lactate 或其他 strong anion 增加。');
+      else if(sida>42) lines.push('SIDa increased：支持 strong ion alkalosis，常見於 hypochloremia、volume contraction 或 diuretic effect。');
+      else lines.push('SIDa roughly normal：目前沒有明顯 chloride/lactate-driven strong ion disturbance。');
+      if(sig>5) lines.push('SIG elevated：代表 unmeasured anions 增加，需考慮 uremia、ketoacidosis、toxin、sepsis-related anions 等。');
+      else lines.push('SIG not elevated：不支持明顯 unmeasured anion acidosis；若仍 acidemia，較偏向 hyperchloremic / respiratory component 或 mixed disorder。');
+      if(num('alb')<3.5) lines.push('Albumin low：低白蛋白會降低 weak acid effect，可能造成 alkalinizing effect，並掩蓋代謝性酸中毒。');
+      if(phos>1.45) lines.push('Phosphate elevated：phosphate 是 weak acid，升高時會增加 acidifying effect，常見於 renal failure。');
+      let summary = ph<7.35 ? '整體為 acidemia，請同時評估 PaCO₂ 是否有 respiratory component。' : ph>7.45 ? '整體為 alkalemia，請同時評估 PaCO₂ 與 chloride/albumin effects。' : 'pH 在正常範圍時仍可能有 mixed disorder，建議看 SIDa、SIG 與 PaCO₂ 是否互相抵銷。';
+      document.getElementById('interpretation').innerHTML = tags.join('') + `<p><b>Clinical interpretation:</b> ${summary}</p><ul>${lines.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+      window.scrollTo({top:document.getElementById('output').offsetTop-8,behavior:'smooth'});
+    }
+    function metric(name,value,unit,note,cls=''){return `<div class="metric ${cls}"><div class="name">${name}</div><div class="value">${value}</div><div class="note">${unit} · ${note}</div></div>`;}
+    function resetDemo(){ ['ph','pco2','na','k','cl','lactate','ca','mg','alb','phos'].forEach((id,i)=>{ const vals=['7.40','40','140','4.0','104','1.0','1.20','0.80','4.0','1.0']; document.getElementById(id).value=vals[i]; }); calc(); }
+    if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{})); }
+    calc();
+  </script>
+</body>
+</html>
