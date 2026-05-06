@@ -33,14 +33,14 @@
       <div class="grid">
         <div class="field"><label>pH <span class="unit"></span></label><input id="ph" inputmode="decimal" value="7.40"></div>
         <div class="field"><label>PaCO₂ <span class="unit">mmHg</span></label><input id="pco2" inputmode="decimal" value="40"></div>
-        <div class="field"><label>Na <span class="unit">mmol/L</span></label><input id="na" inputmode="decimal" value="140"></div>
-        <div class="field"><label>K <span class="unit">mmol/L</span></label><input id="k" inputmode="decimal" value="4.0"></div>
-        <div class="field"><label>Cl <span class="unit">mmol/L</span></label><input id="cl" inputmode="decimal" value="104"></div>
-        <div class="field"><label>Lactate <span class="unit">mmol/L</span></label><input id="lactate" inputmode="decimal" value="1.0"></div>
-        <div class="field"><label>Ionized Ca <span class="unit">mmol/L</span></label><input id="ca" inputmode="decimal" value="1.20"></div>
-        <div class="field"><label>Mg <span class="unit">mmol/L</span></label><input id="mg" inputmode="decimal" value="0.80"></div>
+        <div class="field"><label>Na <span class="unit">mEq/L</span></label><input id="na" inputmode="decimal" value="140"></div>
+        <div class="field"><label>K <span class="unit">mEq/L</span></label><input id="k" inputmode="decimal" value="4.0"></div>
+        <div class="field"><label>Cl <span class="unit">mEq/L</span></label><input id="cl" inputmode="decimal" value="104"></div>
+        <div class="field"><label>Lactate <span class="unit">mg/dL</span></label><input id="lactate" inputmode="decimal" value="9.0"></div>
+        <div class="field"><label>Ca <span class="unit">mg/dL</span></label><input id="ca" inputmode="decimal" value="9.0"></div>
+        <div class="field"><label>Mg <span class="unit">mg/dL</span></label><input id="mg" inputmode="decimal" value="2.0"></div>
         <div class="field"><label>Albumin <span class="unit">g/dL</span></label><input id="alb" inputmode="decimal" value="4.0"></div>
-        <div class="field"><label>Phosphate <span class="unit">mmol/L</span></label><input id="phos" inputmode="decimal" value="1.0"></div>
+        <div class="field"><label>Phosphate <span class="unit">mg/dL</span></label><input id="phos" inputmode="decimal" value="3.5"></div>
       </div>
       <div class="actions"><button class="primary" onclick="calc()">Calculate</button><button class="secondary" onclick="resetDemo()">Reset</button></div>
     </section>
@@ -51,8 +51,8 @@
     </section>
     <section class="card">
       <h2 class="section-title">Formulas</h2>
-      <div class="formula">HCO₃ = 0.0301 × PaCO₂ × 10^(pH − 6.1)<br>SIDa = Na + K + 2×iCa + 2×Mg − Cl − Lactate<br>Albumin charge = Albumin(g/L) × (0.123×pH − 0.631)<br>Phosphate charge = Phosphate × (0.309×pH − 0.469)<br>SIDe = HCO₃ + Albumin charge + Phosphate charge<br>SIG = SIDa − SIDe</div>
-      <p class="small">參考範圍採實用臨床 rule of thumb：SIDa 約 38–42 mEq/L、SIG 約 0–5 mEq/L。不同文獻、檢驗單位與 ionized divalent cation 使用方式可能略有差異。</p>
+      <div class="formula">輸入採報告單位：Na/K/Cl mEq/L；Lactate/Ca/Mg/Phosphate mg/dL；Albumin g/dL<br>HCO₃ = 0.0301 × PaCO₂ × 10^(pH − 6.1)<br>Lactate(mmol/L)=Lactate(mg/dL)×0.111；Ca(mmol/L)=Ca(mg/dL)×0.25；Mg(mmol/L)=Mg(mg/dL)×0.411；Phosphate(mmol/L)=Phosphate(mg/dL)×0.323<br>SIDa = Na + K + 2×Ca(mmol/L) + 2×Mg(mmol/L) − Cl − Lactate(mmol/L)<br>Albumin charge = Albumin(g/L) × (0.123×pH − 0.631)<br>Phosphate charge = Phosphate(mmol/L) × (0.309×pH − 0.469)<br>SIDe = HCO₃ + Albumin charge + Phosphate charge<br>SIG = SIDa − SIDe</div>
+      <p class="small">參考範圍採實用臨床 rule of thumb：SIDa 約 38–42 mEq/L、SIG 約 0–5 mEq/L。本版輸入欄位設計為直接照常見報告單位輸入，程式內部自動轉換。Ca 若可取得 ionized calcium，理論上較適合 Stewart calculation；本版暫以 Ca mg/dL 轉換估算。</p>
     </section>
   </main>
   <script>
@@ -60,11 +60,26 @@
     function fmt(x){ return Number.isFinite(x)?x.toFixed(1):'—'; }
     function badge(text,type){ return `<span class="pill ${type}">${text}</span>`; }
     function calc(){
-      const ph=num('ph'), pco2=num('pco2'), na=num('na'), k=num('k'), cl=num('cl'), lactate=num('lactate'), ca=num('ca'), mg=num('mg'), albGL=num('alb')*10, phos=num('phos');
+      // Raw inputs follow report units
+      const ph=num('ph'), pco2=num('pco2');
+      const na=num('na'), k=num('k'), cl=num('cl'); // mEq/L
+      const lactateMgdl=num('lactate');
+      const caMgdl=num('ca');
+      const mgMgdl=num('mg');
+      const albGdl=num('alb');
+      const phosMgdl=num('phos');
+
+      // Internal conversions for Stewart calculation
+      const lactateMmol=lactateMgdl*0.111;
+      const caMmol=caMgdl*0.25;
+      const mgMmol=mgMgdl*0.411;
+      const albGL=albGdl*10;
+      const phosMmol=phosMgdl*0.323;
+
       const hco3=0.0301*pco2*Math.pow(10, ph-6.1);
-      const sida=na+k+2*ca+2*mg-cl-lactate;
+      const sida=na+k+2*caMmol+2*mgMmol-cl-lactateMmol;
       const albCharge=albGL*(0.123*ph-0.631);
-      const phosCharge=phos*(0.309*ph-0.469);
+      const phosCharge=phosMmol*(0.309*ph-0.469);
       const side=hco3+albCharge+phosCharge;
       const sig=sida-side;
       document.getElementById('output').style.display='block';
@@ -74,19 +89,20 @@
       if(sida<38) tags.push(badge('Low SIDa','danger')); else if(sida>42) tags.push(badge('High SIDa','warn')); else tags.push(badge('SIDa normal','ok'));
       if(sig>5) tags.push(badge('High SIG','danger')); else tags.push(badge('SIG not elevated','ok'));
       let lines=[];
+      lines.push(`Unit conversion：Lactate ${lactateMgdl} mg/dL → ${lactateMmol.toFixed(2)} mmol/L；Ca ${caMgdl} mg/dL → ${caMmol.toFixed(2)} mmol/L；Mg ${mgMgdl} mg/dL → ${mgMmol.toFixed(2)} mmol/L；Phosphate ${phosMgdl} mg/dL → ${phosMmol.toFixed(2)} mmol/L。`);
       if(sida<38) lines.push('SIDa decreased：支持 strong ion acidosis，常見來自 hyperchloremia、lactate 或其他 strong anion 增加。');
       else if(sida>42) lines.push('SIDa increased：支持 strong ion alkalosis，常見於 hypochloremia、volume contraction 或 diuretic effect。');
       else lines.push('SIDa roughly normal：目前沒有明顯 chloride/lactate-driven strong ion disturbance。');
       if(sig>5) lines.push('SIG elevated：代表 unmeasured anions 增加，需考慮 uremia、ketoacidosis、toxin、sepsis-related anions 等。');
       else lines.push('SIG not elevated：不支持明顯 unmeasured anion acidosis；若仍 acidemia，較偏向 hyperchloremic / respiratory component 或 mixed disorder。');
-      if(num('alb')<3.5) lines.push('Albumin low：低白蛋白會降低 weak acid effect，可能造成 alkalinizing effect，並掩蓋代謝性酸中毒。');
-      if(phos>1.45) lines.push('Phosphate elevated：phosphate 是 weak acid，升高時會增加 acidifying effect，常見於 renal failure。');
+      if(albGdl<3.5) lines.push('Albumin low：低白蛋白會降低 weak acid effect，可能造成 alkalinizing effect，並掩蓋代謝性酸中毒。');
+      if(phosMmol>1.45) lines.push('Phosphate elevated：phosphate 是 weak acid，升高時會增加 acidifying effect，常見於 renal failure。');
       let summary = ph<7.35 ? '整體為 acidemia，請同時評估 PaCO₂ 是否有 respiratory component。' : ph>7.45 ? '整體為 alkalemia，請同時評估 PaCO₂ 與 chloride/albumin effects。' : 'pH 在正常範圍時仍可能有 mixed disorder，建議看 SIDa、SIG 與 PaCO₂ 是否互相抵銷。';
       document.getElementById('interpretation').innerHTML = tags.join('') + `<p><b>Clinical interpretation:</b> ${summary}</p><ul>${lines.map(x=>`<li>${x}</li>`).join('')}</ul>`;
       window.scrollTo({top:document.getElementById('output').offsetTop-8,behavior:'smooth'});
     }
     function metric(name,value,unit,note,cls=''){return `<div class="metric ${cls}"><div class="name">${name}</div><div class="value">${value}</div><div class="note">${unit} · ${note}</div></div>`;}
-    function resetDemo(){ ['ph','pco2','na','k','cl','lactate','ca','mg','alb','phos'].forEach((id,i)=>{ const vals=['7.40','40','140','4.0','104','1.0','1.20','0.80','4.0','1.0']; document.getElementById(id).value=vals[i]; }); calc(); }
+    function resetDemo(){ ['ph','pco2','na','k','cl','lactate','ca','mg','alb','phos'].forEach((id,i)=>{ const vals=['7.40','40','140','4.0','104','9.0','9.0','2.0','4.0','3.5']; document.getElementById(id).value=vals[i]; }); calc(); }
     if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{})); }
     calc();
   </script>
