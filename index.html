@@ -51,7 +51,7 @@
     </section>
     <section class="card">
       <h2 class="section-title">Formulas</h2>
-      <div class="formula">輸入採報告單位：Na/K/Cl mEq/L；Lactate/Ca/Mg/Phosphate mg/dL；Albumin g/dL<br>HCO₃ = 0.0301 × PaCO₂ × 10^(pH − 6.1)<br>Lactate(mmol/L)=Lactate(mg/dL)×0.111；Ca(mmol/L)=Ca(mg/dL)×0.25；Mg(mmol/L)=Mg(mg/dL)×0.411；Phosphate(mmol/L)=Phosphate(mg/dL)×0.323<br>SIDa = Na + K + 2×Ca(mmol/L) + 2×Mg(mmol/L) − Cl − Lactate(mmol/L)<br>Albumin charge = Albumin(g/L) × (0.123×pH − 0.631)<br>Phosphate charge = Phosphate(mmol/L) × (0.309×pH − 0.469)<br>SIDe = HCO₃ + Albumin charge + Phosphate charge<br>SIG = SIDa − SIDe</div>
+      <div class="formula">輸入採報告單位：Na/K/Cl mEq/L；Lactate/Ca/Mg/Phosphate mg/dL；Albumin g/dL<br>HCO₃ = 0.0301 × PaCO₂ × 10^(pH − 6.1)<br>Lactate(mmol/L)=Lactate(mg/dL)×0.111；Ca(mmol/L)=Ca(mg/dL)×0.25；Mg(mmol/L)=Mg(mEq/L)÷2；Phosphate(mmol/L)=Phosphate(mg/dL)×0.323<br>SIDa = Na + K + 2×Ca(mmol/L) + 2×Mg(mmol/L) − Cl − Lactate(mmol/L)<br>Albumin charge = Albumin(g/L) × (0.123×pH − 0.631)<br>Phosphate charge = Phosphate(mmol/L) × (0.309×pH − 0.469)<br>SIDe = HCO₃ + Albumin charge + Phosphate charge<br>SIG = SIDa − SIDe</div>
       <p class="small">
 參考範圍採實用臨床 rule of thumb：SIDa 約 38–42 mEq/L、SIG 約 0–5 mEq/L。<br>
 本版輸入欄位設計為直接照常見報告單位輸入，程式內部自動轉換。<br>
@@ -105,14 +105,14 @@ which may mask metabolic acidosis.
       const na=num('na'), k=num('k'), cl=num('cl'); // mEq/L
       const lactateMgdl=num('lactate');
       const caMgdl=num('ca');
-      const mgMgdl=num('mg');
+      const mgMeq=num('mg');
       const albGdl=num('alb');
       const phosMgdl=num('phos');
 
       // Internal conversions for Stewart calculation
       const lactateMmol=lactateMgdl*0.111;
       const caMmol=caMgdl*0.25;
-      const mgMmol=mgMgdl*0.411;
+      const mgMmol=mgMeq/2;
       const albGL=albGdl*10;
       const phosMmol=phosMgdl*0.323;
 
