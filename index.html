@@ -52,7 +52,7 @@
     <section class="card">
       <h2 class="section-title">Formulas</h2>
       <div class="formula">輸入採報告單位：Na/K/Cl mEq/L；Lactate/Ca/Mg/Phosphate mg/dL；Albumin g/dL<br>HCO₃ = 0.0301 × PaCO₂ × 10^(pH − 6.1)<br>Lactate(mmol/L)=Lactate(mg/dL)×0.111；Ca(mmol/L)=Ca(mg/dL)×0.25；Mg(mmol/L)=Mg(mEq/L)÷2；Phosphate(mmol/L)=Phosphate(mg/dL)×0.323<br>SIDa = Na + K + 2×Ca(mmol/L) + 2×Mg(mmol/L) − Cl − Lactate(mmol/L)<br>Albumin charge = Albumin(g/L) × (0.123×pH − 0.631)<br>Phosphate charge = Phosphate(mmol/L) × (0.309×pH − 0.469)<br>SIDe = HCO₃ + Albumin charge + Phosphate charge<br>SIG = SIDa − SIDe</div>
-      <p class="small">
+      <div class="small">
 參考範圍採實用臨床 rule of thumb：SIDa 約 38–42 mEq/L、SIG 約 0–5 mEq/L。<br>
 本版輸入欄位設計為直接照常見報告單位輸入，程式內部自動轉換。<br>
 Ca 若可取得 ionized calcium，理論上較適合 Stewart calculation；本版暫以 Ca mg/dL 轉換估算。
@@ -92,7 +92,7 @@ Elevated SIG suggests excess unmeasured anions such as:
 <b>Albumin effect</b><br>
 Low albumin reduces weak acids and produces an alkalinizing effect,
 which may mask metabolic acidosis.
-</p>
+</div>
     </section>
   </main>
   <script>
