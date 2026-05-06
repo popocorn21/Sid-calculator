@@ -7,26 +7,21 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="SID Calc" />
-  <link rel="manifest" href="manifest.json" />
-  <title>SID Calculator</title>
+  <link rel="manifest" href="manifest.json?v=4" />
+  <title>Fencl-Stewart Calculator</title>
   <style>
-    :root{
-      --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#64748b;
-      --primary:#0f766e; --primary-dark:#115e59; --border:#e2e8f0;
-      --danger:#b91c1c; --warn:#b45309; --ok:#047857; --shadow:0 10px 25px rgba(15,23,42,.08);
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:linear-gradient(180deg,#ecfeff 0%,var(--bg) 220px);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",Arial,sans-serif;color:var(--text);}
-    .wrap{max-width:680px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));}
-    header{margin-bottom:16px}.title{font-size:28px;font-weight:800;letter-spacing:-.03em;margin:0}.subtitle{color:var(--muted);margin:6px 0 0;font-size:14px;line-height:1.5}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);padding:16px;margin:14px 0}.section-title{font-size:16px;font-weight:750;margin:0 0 12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);margin-bottom:6px}.field input{width:100%;font-size:18px;padding:12px;border:1px solid var(--border);border-radius:14px;background:#fff;color:var(--text);outline:none}.field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(15,118,110,.13)}.unit{font-size:12px;color:#94a3b8}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}button{border:0;border-radius:15px;padding:13px 14px;font-weight:750;font-size:16px;cursor:pointer}.primary{background:var(--primary);color:#fff}.primary:active{background:var(--primary-dark)}.secondary{background:#e2e8f0;color:#0f172a}.results{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{border:1px solid var(--border);background:#f8fafc;border-radius:18px;padding:13px}.metric .name{font-size:13px;color:var(--muted)}.metric .value{font-size:25px;font-weight:850;margin-top:4px}.metric .note{font-size:12px;color:var(--muted);margin-top:2px}.full{grid-column:1/-1}.pill{display:inline-block;border-radius:999px;padding:6px 10px;font-size:13px;font-weight:750;margin:4px 6px 4px 0}.pill.ok{background:#dcfce7;color:var(--ok)}.pill.warn{background:#fef3c7;color:var(--warn)}.pill.danger{background:#fee2e2;color:var(--danger)}.interp{line-height:1.7;font-size:15px}.interp ul{padding-left:20px;margin:8px 0}.small{font-size:12px;color:var(--muted);line-height:1.6}.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#f1f5f9;border-radius:12px;padding:10px;font-size:12px;overflow:auto;line-height:1.5}@media (max-width:420px){.grid,.results{grid-template-columns:1fr}.title{font-size:25px}.actions{grid-template-columns:1fr}.full{grid-column:auto}}
+    :root{--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--primary:#0f766e;--primary-dark:#115e59;--border:#e2e8f0;--danger:#b91c1c;--warn:#b45309;--ok:#047857;--shadow:0 10px 25px rgba(15,23,42,.08)}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#ecfeff 0%,var(--bg) 220px);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",Arial,sans-serif;color:var(--text)}
+    .wrap{max-width:680px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom))} header{margin-bottom:16px}.title{font-size:28px;font-weight:800;letter-spacing:-.03em;margin:0}.subtitle{color:var(--muted);margin:6px 0 0;font-size:14px;line-height:1.5}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);padding:16px;margin:14px 0}.section-title{font-size:16px;font-weight:750;margin:0 0 12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);margin-bottom:6px}.field input{width:100%;font-size:18px;padding:12px;border:1px solid var(--border);border-radius:14px;background:#fff;color:var(--text);outline:none}.field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(15,118,110,.13)}.unit{font-size:12px;color:#94a3b8}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}button{border:0;border-radius:15px;padding:13px 14px;font-weight:750;font-size:16px;cursor:pointer}.primary{background:var(--primary);color:#fff}.primary:active{background:var(--primary-dark)}.secondary{background:#e2e8f0;color:#0f172a}
+    .results{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{border:1px solid var(--border);background:#f8fafc;border-radius:18px;padding:13px}.metric .name{font-size:13px;color:var(--muted)}.metric .value{font-size:25px;font-weight:850;margin-top:4px}.metric .note{font-size:12px;color:var(--muted);margin-top:2px}.full{grid-column:1/-1}.pill{display:inline-block;border-radius:999px;padding:6px 10px;font-size:13px;font-weight:750;margin:4px 6px 4px 0}.pill.ok{background:#dcfce7;color:var(--ok)}.pill.warn{background:#fef3c7;color:var(--warn)}.pill.danger{background:#fee2e2;color:var(--danger)}.interp{line-height:1.7;font-size:15px}.interp ul{padding-left:20px;margin:8px 0}.small{font-size:12px;color:var(--muted);line-height:1.6}.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#f1f5f9;border-radius:12px;padding:10px;font-size:12px;overflow:auto;line-height:1.5}.step{font-weight:800;color:#0f766e;margin-top:8px}@media(max-width:420px){.grid,.results{grid-template-columns:1fr}.title{font-size:25px}.actions{grid-template-columns:1fr}.full{grid-column:auto}}
   </style>
 </head>
 <body>
   <main class="wrap">
     <header>
-      <h1 class="title">SID Calculator</h1>
-      <p class="subtitle">Three-step Stewart approach：先看 Na 評估 water excess/deficit，再用 sodium-corrected Cl，最後計算不先扣 lactate 的 SIDa / SIDe / SIG。</p>
+      <h1 class="title">Fencl-Stewart Calculator</h1>
+      <p class="subtitle">依你提供的 Fencl-Stewart 步驟：先看 Na 評估 water excess/deficit，再校正 Cl，接著算 effective SID，最後算 unmeasured strong anions。Lactate 不先從 SIDa 扣除，而是包含在 UA/SIG 內。</p>
     </header>
     <section class="card">
       <h2 class="section-title">Blood gas / electrolytes</h2>
@@ -35,7 +30,7 @@
         <div class="field"><label>PaCO₂ <span class="unit">mmHg</span></label><input id="pco2" inputmode="decimal" value="40"></div>
         <div class="field"><label>Na <span class="unit">mEq/L</span></label><input id="na" inputmode="decimal" value="140"></div>
         <div class="field"><label>K <span class="unit">mEq/L</span></label><input id="k" inputmode="decimal" value="4.0"></div>
-        <div class="field"><label>Cl <span class="unit">mEq/L</span></label><input id="cl" inputmode="decimal" value="104"></div>
+        <div class="field"><label>Cl <span class="unit">mEq/L</span></label><input id="cl" inputmode="decimal" value="102"></div>
         <div class="field"><label>Lactate <span class="unit">mg/dL</span></label><input id="lactate" inputmode="decimal" value="9.0"></div>
         <div class="field"><label>Ca <span class="unit">mg/dL</span></label><input id="ca" inputmode="decimal" value="9.0"></div>
         <div class="field"><label>Mg <span class="unit">mEq/L</span></label><input id="mg" inputmode="decimal" value="1.6"></div>
@@ -50,100 +45,86 @@
       <div class="interp" id="interpretation" style="margin-top:14px"></div>
     </section>
     <section class="card">
-      <h2 class="section-title">Formulas</h2>
-      <div class="formula">輸入採報告單位：Na/K/Cl/Mg mEq/L；Lactate/Ca/Phosphate mg/dL；Albumin g/dL<br>Step 1：Na 評估 water excess/deficit<br>Step 2：Cl_corrected = Cl_measured × 140 / Na_measured<br>HCO₃ = 0.0301 × PaCO₂ × 10^(pH − 6.1)<br>Lactate(mmol/L)=Lactate(mg/dL)×0.111；Ca(mmol/L)=Ca(mg/dL)×0.25；Mg(mmol/L)=Mg(mEq/L)÷2；Phosphate(mmol/L)=Phosphate(mg/dL)×0.323<br>SIDa = Na + K + 2×Ca(mmol/L) + 2×Mg(mmol/L) − Cl_corrected<br>Albumin charge = Albumin(g/L) × (0.123×pH − 0.631)<br>Phosphate charge = Phosphate(mmol/L) × (0.309×pH − 0.469)<br>SIDe = HCO₃ + Albumin charge + Phosphate charge<br>SIG = SIDa − SIDe<br>Note：此版本不先從 SIDa 扣 lactate；lactate 會保留在 SIG / unmeasured anions 的概念中。</div>
-      <p class="small">
-        參考範圍採實用臨床 rule of thumb：SIDa 約 38–42 mEq/L、SIG 約 0–5 mEq/L。<br>
-        本版輸入欄位設計為直接照常見報告單位輸入，程式內部自動轉換。Ca 若可取得 ionized calcium，理論上較適合 Stewart calculation；本版暫以 Ca mg/dL 轉換估算。Corrected Cl 用於判斷 relative hyperchloremia / hypochloremia，減少 sodium-water status 對 chloride 解讀的干擾。
-        <br><br>
-        <b>Physiologic meaning & clinical interpretation</b><br><br>
-        <b>Na / water balance</b><br>
-        Na 主要反映 free water balance。Hyponatremia 通常代表相對 water excess；hypernatremia 通常代表 water deficit 或 sodium gain。<br><br>
-        <b>Corrected Cl</b><br>
-        Corrected chloride = measured Cl × 140 / measured Na，用來判斷 chloride 是否相對於 sodium 過多或不足。High corrected Cl 支持 hyperchloremic strong ion acidosis；low corrected Cl 支持 hypochloremic / contraction alkalosis。<br><br>
-        <b>SIDa (apparent strong ion difference)</b><br>
-        Represents the measured difference between strong cations and strong anions. 本版本使用 corrected Cl，且不先扣 lactate；因此 SIDa 主要反映 Na/K/Ca/Mg 與相對 chloride 的差異。Low SIDa usually indicates chloride-driven metabolic acidosis；high SIDa usually indicates hypochloremic or contraction alkalosis。<br><br>
-        <b>SIDe (effective strong ion difference)</b><br>
-        Represents the effective charge balance explained by bicarbonate and weak acids (albumin and phosphate)。受 HCO₃、albumin、phosphate 影響。Low albumin reduces weak acids and produces an alkalinizing effect, which may mask metabolic acidosis。<br><br>
-        <b>SIG (strong ion gap)</b><br>
-        Represents unmeasured ions not explained by routine electrolytes。因本版本 SIDa 不先扣 lactate，SIG 會包含 lactate effect plus other unmeasured anions。Elevated SIG suggests excess anions such as lactate, uremia, ketoacidosis, toxic alcohols, salicylate, or sepsis-related anions。
-      </p>
+      <h2 class="section-title">Formulas & steps</h2>
+      <div class="formula">
+        <div class="step">Step 1 — Water excess/deficit by Na</div>
+        Na normal = 140 ± 2 mEq/L<br>
+        Low Na → relative water excess, acidifying effect<br>
+        High Na → relative water deficit, alkalinizing effect<br><br>
+        <div class="step">Step 2 — Chloride excess/deficit</div>
+        Corrected Cl = measured Cl × 140 / measured Na<br>
+        Cl normal ≈ 102 mEq/L<br>
+        Corrected Cl &gt; 102 → chloride excess, acidifying effect<br>
+        Corrected Cl &lt; 102 → chloride deficit, alkalinizing effect<br><br>
+        <div class="step">Step 3 — Effective SID</div>
+        HCO₃ = 0.0301 × PaCO₂ × 10^(pH − 6.1)<br>
+        Albuminate⁻ = 0.25 × Albumin(g/L)<br>
+        Pi⁻ = 0.6 × Phosphate(mg/dL)<br>
+        eSID / SIDe = HCO₃ + Albuminate⁻ + Pi⁻; normal ≈ 39 ± 1 mEq/L<br><br>
+        <div class="step">Step 4 — Unmeasured strong anions</div>
+        Ca charge = Ca(mg/dL) × 0.5 mEq/L<br>
+        Mg charge = Mg(mEq/L)<br>
+        UA / SIG = Na + K + Ca charge + Mg charge − Cl − eSID<br>
+        Normal UA/SIG ≈ 8 ± 2 mEq/L<br>
+        Lactate is not subtracted from SIDa; it is included in UA/SIG with keto-acids, sulfate, and other organic anions.
+      </div>
+      <p class="small"><b>Clinical meaning</b><br>
+      Na 反映 free water effect；corrected Cl 用來避免 dilution/concentration 誤判 chloride excess/deficit；eSID 反映 bicarbonate、albumin、phosphate 所解釋的 effective charge balance；UA/SIG 代表 Cl 以外的 unmeasured strong anions，包含 lactate、keto-acids、sulfate 與其他 organic anions。</p>
     </section>
   </main>
   <script>
+    const NA_NORMAL=140, CL_NORMAL=102, UA_NORMAL=8;
     function num(id){ const x=parseFloat(String(document.getElementById(id).value).replace(',','.')); return Number.isFinite(x)?x:0; }
     function fmt(x){ return Number.isFinite(x)?x.toFixed(1):'—'; }
     function badge(text,type){ return `<span class="pill ${type}">${text}</span>`; }
+    function metric(name,value,unit,note,cls=''){return `<div class="metric ${cls}"><div class="name">${name}</div><div class="value">${value}</div><div class="note">${unit} · ${note}</div></div>`;}
     function calc(){
-      // Raw inputs follow report units
-      const ph=num('ph'), pco2=num('pco2');
-      const na=num('na'), k=num('k'), clMeasured=num('cl'); // mEq/L
-      const lactateMgdl=num('lactate');
-      const caMgdl=num('ca');
-      const mgMeq=num('mg');
-      const albGdl=num('alb');
-      const phosMgdl=num('phos');
-
-      // Internal conversions for Stewart calculation
-      const lactateMmol=lactateMgdl*0.111;
-      const caMmol=caMgdl*0.25;
-      const mgMmol=mgMeq/2;
-      const albGL=albGdl*10;
-      const phosMmol=phosMgdl*0.323;
-
-      // Step 1: water status by sodium
-      let waterStatus='Water balance roughly neutral by Na';
-      let waterType='ok';
-      if(na<135){ waterStatus='Relative water excess by Na (hyponatremia)'; waterType='danger'; }
-      else if(na>145){ waterStatus='Relative water deficit or sodium gain by Na (hypernatremia)'; waterType='warn'; }
-
-      // Step 2: sodium-corrected chloride
-      const clCorrected = na>0 ? clMeasured*140/na : NaN;
-      const clNaRatio = na>0 ? clMeasured/na : NaN;
-      const naClDiff = na-clMeasured;
-
-      // Step 3: SIDa without subtracting lactate
+      const ph=num('ph'), pco2=num('pco2'), na=num('na'), k=num('k'), cl=num('cl');
+      const lactateMgdl=num('lactate'), caMgdl=num('ca'), mgMeq=num('mg'), albGdl=num('alb'), phosMgdl=num('phos');
       const hco3=0.0301*pco2*Math.pow(10, ph-6.1);
-      const sida=na+k+2*caMmol+2*mgMmol-clCorrected;
-      const albCharge=albGL*(0.123*ph-0.631);
-      const phosCharge=phosMmol*(0.309*ph-0.469);
-      const side=hco3+albCharge+phosCharge;
-      const sig=sida-side;
+      const correctedCl=na>0 ? cl*NA_NORMAL/na : NaN;
+      const chlorideDiff=correctedCl-CL_NORMAL;
+      const albGL=albGdl*10;
+      const albuminate=0.25*albGL;
+      const phosphateCharge=0.6*phosMgdl;
+      const eSID=hco3+albuminate+phosphateCharge;
+      const caCharge=caMgdl*0.5;
+      const mgCharge=mgMeq;
+      const apparentSID=na+k+caCharge+mgCharge-cl;
+      const ua=apparentSID-eSID;
+      const lactateMmol=lactateMgdl*0.111;
       document.getElementById('output').style.display='block';
       document.getElementById('metrics').innerHTML =
-        metric('Na status', na.toFixed(0), 'mEq/L', waterStatus)+
-        metric('Corrected Cl', fmt(clCorrected), 'mEq/L', 'Cl × 140 / Na')+
+        metric('Na / water',fmt(na),'mEq/L',waterNote(na),'full')+
+        metric('Corrected Cl',fmt(correctedCl),'mEq/L','Cl × 140 / Na')+
+        metric('Cl excess',fmt(chlorideDiff),'mEq/L','Corrected Cl − 102')+
         metric('HCO₃',fmt(hco3),'mmol/L','Calculated')+
-        metric('SIDa',fmt(sida),'mEq/L','Using corrected Cl; lactate not subtracted')+
-        metric('SIDe',fmt(side),'mEq/L','Effective SID')+
-        metric('SIG',fmt(sig),'mEq/L','Includes lactate + other unmeasured anions','full');
+        metric('SIDe / eSID',fmt(eSID),'mEq/L','HCO₃ + Alb⁻ + Pi⁻')+
+        metric('SIDa',fmt(apparentSID),'mEq/L','Observed ions; lactate not subtracted')+
+        metric('UA / SIG',fmt(ua),'mEq/L','Includes lactate + other unmeasured anions','full');
       let tags=[];
-      tags.push(badge(waterStatus,waterType));
+      if(na<138) tags.push(badge('Water excess by Na','danger')); else if(na>142) tags.push(badge('Water deficit by Na','warn')); else tags.push(badge('Na water effect normal','ok'));
       if(ph<7.35) tags.push(badge('Acidemia','danger')); else if(ph>7.45) tags.push(badge('Alkalemia','warn')); else tags.push(badge('pH near normal','ok'));
-      if(clCorrected>108) tags.push(badge('Relative hyperchloremia','danger')); else if(clCorrected<100) tags.push(badge('Relative hypochloremia','warn')); else tags.push(badge('Corrected Cl near normal','ok'));
-      if(sida<38) tags.push(badge('Low SIDa','danger')); else if(sida>42) tags.push(badge('High SIDa','warn')); else tags.push(badge('SIDa normal','ok'));
-      if(sig>5) tags.push(badge('High SIG','danger')); else tags.push(badge('SIG not elevated','ok'));
+      if(correctedCl>104) tags.push(badge('Chloride excess','danger')); else if(correctedCl<100) tags.push(badge('Chloride deficit','warn')); else tags.push(badge('Corrected Cl normal','ok'));
+      if(eSID<38) tags.push(badge('Low eSID','danger')); else if(eSID>40) tags.push(badge('High eSID','warn')); else tags.push(badge('eSID normal','ok'));
+      if(ua>10) tags.push(badge('High UA / SIG','danger')); else if(ua<6) tags.push(badge('Low UA / SIG','warn')); else tags.push(badge('UA / SIG normal','ok'));
       let lines=[];
-      lines.push(`Step 1 — Na/water：Na ${na} mEq/L → ${waterStatus}。`);
-      lines.push(`Step 2 — Corrected Cl：measured Cl ${clMeasured} mEq/L → corrected Cl ${clCorrected.toFixed(1)} mEq/L；Cl/Na ratio ${clNaRatio.toFixed(3)}；Na−Cl difference ${naClDiff.toFixed(1)}。`);
-      lines.push(`Step 3 — Unit conversion：Lactate ${lactateMgdl} mg/dL → ${lactateMmol.toFixed(2)} mmol/L；Ca ${caMgdl} mg/dL → ${caMmol.toFixed(2)} mmol/L；Mg ${mgMeq} mEq/L → ${mgMmol.toFixed(2)} mmol/L；Phosphate ${phosMgdl} mg/dL → ${phosMmol.toFixed(2)} mmol/L。`);
-      if(clCorrected>108) lines.push('Corrected Cl increased：支持 relative hyperchloremia，會降低 SIDa，造成 strong ion acidosis tendency。');
-      else if(clCorrected<100) lines.push('Corrected Cl decreased：支持 relative hypochloremia，會提高 SIDa，造成 strong ion alkalosis tendency。');
-      else lines.push('Corrected Cl roughly normal：沒有明顯 relative chloride excess/deficit。');
-      if(sida<38) lines.push('SIDa decreased：支持 strong ion acidosis，這個版本主要反映 corrected chloride 過高或 strong cation 相對不足。');
-      else if(sida>42) lines.push('SIDa increased：支持 strong ion alkalosis，常見於 corrected chloride 偏低、volume contraction 或 diuretic effect。');
-      else lines.push('SIDa roughly normal：目前沒有明顯 corrected-chloride-driven strong ion disturbance。');
-      if(sig>5) lines.push('SIG elevated：此版本未先扣 lactate，因此 SIG 包含 lactate plus other unmeasured anions；需考慮 lactic acidosis、uremia、ketoacidosis、toxin、sepsis-related anions 等。');
-      else lines.push('SIG not elevated：不支持明顯 lactate/unmeasured anion burden；若仍 acidemia，需評估 respiratory component、corrected chloride 或 mixed disorder。');
-      if(albGdl<3.5) lines.push('Albumin low：低白蛋白會降低 weak acid effect，可能造成 alkalinizing effect，並掩蓋代謝性酸中毒。');
-      if(phosMmol>1.45) lines.push('Phosphate elevated：phosphate 是 weak acid，升高時會增加 acidifying effect，常見於 renal failure。');
-      let summary = ph<7.35 ? '整體為 acidemia，請同時評估 PaCO₂ 是否有 respiratory component。' : ph>7.45 ? '整體為 alkalemia，請同時評估 PaCO₂ 與 corrected Cl/albumin effects。' : 'pH 在正常範圍時仍可能有 mixed disorder，建議看 Na、corrected Cl、SIDa、SIG 與 PaCO₂ 是否互相抵銷。';
+      lines.push(`Step 1 — Na/water：Na ${fmt(na)} mEq/L → ${waterInterp(na)}`);
+      lines.push(`Step 2 — Chloride：corrected Cl = ${fmt(cl)} × 140 / ${fmt(na)} = ${fmt(correctedCl)} mEq/L；${chlorideInterp(correctedCl)}。`);
+      lines.push(`Step 3 — eSID：HCO₃ ${fmt(hco3)} + Alb⁻ ${fmt(albuminate)} + Pi⁻ ${fmt(phosphateCharge)} = ${fmt(eSID)} mEq/L；${esidInterp(eSID)}。`);
+      lines.push(`Step 4 — UA/SIG：Na ${fmt(na)} + K ${fmt(k)} + Ca charge ${fmt(caCharge)} + Mg charge ${fmt(mgCharge)} − Cl ${fmt(cl)} − eSID ${fmt(eSID)} = ${fmt(ua)} mEq/L；${uaInterp(ua)}。`);
+      lines.push(`Lactate ${fmt(lactateMgdl)} mg/dL ≈ ${lactateMmol.toFixed(2)} mmol/L；本版本不先從 SIDa 扣 lactate，因此 lactate 會被包含在 UA/SIG 之中。`);
+      let summary = ph<7.35 ? '整體為 acidemia；依序判斷 water、chloride、effective SID 與 UA/SIG 的貢獻。' : ph>7.45 ? '整體為 alkalemia；請注意 water deficit、chloride deficit 或低 albumin 的 alkalinizing effect。' : 'pH 接近正常仍可能有 mixed disorder，建議依四步驟看是否互相抵銷。';
       document.getElementById('interpretation').innerHTML = tags.join('') + `<p><b>Clinical interpretation:</b> ${summary}</p><ul>${lines.map(x=>`<li>${x}</li>`).join('')}</ul>`;
       window.scrollTo({top:document.getElementById('output').offsetTop-8,behavior:'smooth'});
     }
-    function metric(name,value,unit,note,cls=''){return `<div class="metric ${cls}"><div class="name">${name}</div><div class="value">${value}</div><div class="note">${unit} · ${note}</div></div>`;}
-    function resetDemo(){ ['ph','pco2','na','k','cl','lactate','ca','mg','alb','phos'].forEach((id,i)=>{ const vals=['7.40','40','140','4.0','104','9.0','9.0','1.6','4.0','3.5']; document.getElementById(id).value=vals[i]; }); calc(); }
-    if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js?v=3').catch(()=>{})); }
+    function waterNote(na){ return na<138?'Relative water excess by Na':na>142?'Relative water deficit by Na':'Normal water effect by Na'; }
+    function waterInterp(na){ return na<138?'relative water excess，acidifying effect':na>142?'relative water deficit，alkalinizing effect':'沒有明顯 water excess/deficit effect'; }
+    function chlorideInterp(c){ return c>104?'chloride excess，acidifying effect':c<100?'chloride deficit，alkalinizing effect':'沒有明顯 chloride excess/deficit'; }
+    function esidInterp(x){ return x<38?'low eSID，acidifying tendency':x>40?'high eSID，alkalinizing tendency':'eSID 約在正常範圍'; }
+    function uaInterp(x){ return x>10?'unmeasured strong anions increased，包含 lactate、keto-acids、sulfate 或其他 organic anions':x<6?'UA/SIG 偏低，未支持 unmeasured strong anions 增加':'UA/SIG 約在正常範圍'; }
+    function resetDemo(){ const vals={ph:'7.40',pco2:'40',na:'140',k:'4.0',cl:'102',lactate:'9.0',ca:'9.0',mg:'1.6',alb:'4.0',phos:'3.5'}; Object.keys(vals).forEach(id=>document.getElementById(id).value=vals[id]); calc(); }
+    if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js?v=4').catch(()=>{})); }
     calc();
   </script>
 </body>
